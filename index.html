@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Unicorn Start-ups Across the Globe</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=GFS+Didot&family=Poppins:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script src="https://unpkg.com/intersection-observer"></script>
+	<script src="https://unpkg.com/scrollama"></script>
+</head>
+<style type="text/css">
+	body, html {
+		top:0;
+		left:0;
+		margin:0;
+		font-family:'Poppins', sans-serif;
+	}
+	nav	{
+		background-color:white;
+		position:fixed;
+		width:100%;
+		display:flex;
+		justify-content: center;
+		align-items:center;
+		border-bottom:0.05em solid black;
+		z-index:100;
+	}
+	.title {
+		height:60vh;
+		color:white;
+		background-color:black;
+/*		background-image:url('https://i.pinimg.com/originals/7f/43/1c/7f431c9e6991b1a83d79e359dc09c99d.gif');*/
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-position: left top;
+		background-size: auto 100%;
+		line-height:7em;
+		text-align:left;
+	}
+	.title h1 {
+		font-size:6em;
+	}
+	.title h2 {
+		font-size:1em;
+		font-weight:400;
+	}
+	.header {
+		text-align:center;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		border:0.5em solid black;
+		padding:5% 0%;
+		animation: fadeIn 0.5s ease-in-out;
+	}
+	.header h1{
+		font-family:'Poppins', sans-serif;
+		font-weight:800;
+		margin:0;
+	}
+	.header h2 {
+		margin:0;
+	}
+	.sticky {
+		float:right;
+		top:25%;
+		position:sticky;
+		width:50%;
+		display:inline-flex;
+		background-color:white;
+	}
+	.leftside{
+		background-color:black;
+		color:white;
+		width: 30%;
+    	padding: 5% 10% 5% 5%;
+	}
+	.progressive{
+		width:100%;
+		display:block;
+		margin-bottom:100%!important;
+	}
+	.end {
+		margin-bottom:5%!important;
+	}
+	#counter {
+		width:100%;
+		font-size:10em;
+		text-align:center;
+		margin:0;
+		padding:0%;
+		line-height:1em;
+		font-weight: 800;
+    	letter-spacing: -0.05em;
+	}
+	#counter h2{
+		text-align:center;
+	}
+	.text {
+		margin:5%;
+		line-height:1.5em;
+		opacity:0;
+		margin-top:10%;
+		transition:0.5s ease-in-out;
+	}
+	.text h1 {
+		font-size:1.5em;
+		letter-spacing:-0.05em;
+		line-height:1em;
+		font-weight:900;
+		width:100%;
+	}
+	.text h2 {
+		font-weight:400;
+		font-size:1em;
+		font-style:italic;
+	}
+	.sticky h1 {
+		width:100%;
+		font-size:3em;
+	}
+	.sticky h2 {
+		font-size:0.8em;
+		text-transform:uppercase;
+		letter-spacing:0.1em;
+	}
+	.center_aligner {
+		overflow:none;
+		width:100%;
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		margin:2% 0%;
+	}
+	iframe {
+		width:1200px;
+		height:1000px;
+	}
+	.tableauPlaceholder{
+		width:50%;
+		z-index:0;
+	}
+	img{
+		text-align:center;
+		margin:0%;
+		display:inline-block;
+	}
+	.caption {
+		font-size:14px;
+		color:#666666;
+		align-items:center;
+		padding:2%;
+	}
+	.captiontableau {
+		text-align:center;
+		font-size:14px;
+		color:#666666;
+		padding:2%;
+	}
+	.small {
+		width:65%;
+	}
+	.medium {
+		width:75%;
+		padding: 5%;
+		animation: fadeIn 2.5s ease-in-out;
+	}
+	.large {
+		width:80%;
+		display:block;
+	}
+	@keyframes fadeIn {
+		0%{
+			opacity:0;
+		}
+		100%{
+			opacity:1;
+		}
+	}
+	@media screen and (max-width:767px){
+		.sticky {
+	/*		bottom:0;*/
+			width:50%;
+			float:none;
+			margin:auto;
+			display:flex;
+			line-height:2em;
+		}
+		.sticky h1 {
+			font-size:2em;
+			line-height:2em;
+		}
+		.sticky h2 {
+			font-size:0.5em;
+		}
+		#counter {
+			font-size:5em;
+		}
+		.leftside {
+			width: 85%;
+    		padding: 5% 10% 5% 5%;
+		}
+		.small {
+			width:80%;
+		}
+		.title {
+			height:80vh;
+		}
+		.text h1 {
+			font-size:2.5em;
+			width:80%;
+		}
+		.text {
+			margin:10% 5%;
+		}
+		iframe {
+			height:20px;
+		}
+
+	}
+</style>
+<body>
+
+<!-- text -->
+<div class='center_aligner'>
+	<!-- change line 120 if you want to change the size of the image -->
+	<img class='medium' src="images/unicorntitle.png">
+
+</div>
+
+<div class='text'>
+	<h1>What is considered as an Unicorn start-up?</h1>
+	The term "unicorn" was coined in 2013 by venture capitalist Aileen Lee in a TechCrunch article titled <a href="http://techcrunch.com/2013/11/02/welcome-to-the-unicorn-club/">"Welcome To The Unicorn Club: Learning From Billion-Dollar Startups."</a> In the article, Lee observed that start-ups with valuations of $1 billion or more were rare, with only 39 companies meeting that threshold at the time. Lee chose the term "unicorn" to describe these companies because, like the mythical creature, they were elusive and difficult to find. The term quickly gained popularity and has since become a widely recognized way of describing highly valued start-ups.
+</div>
+
+<div class='text'>
+	<h1>Before we go any further about who are the unicorns, let's visualize on how big is a $1 billion dollars:</h1>
+</div>
+
+<!-- image 1 -->
+<div class='center_aligner'>
+	<!-- change line 120 if you want to change the size of the image -->
+	<img class='small' src="images/abilliondollar.png"> 	
+</div>
+<!-- caption for image 1 -->
+<div class='center_aligner'>
+	<div class='caption'>It is massive and a billion dollar is a lot! Now, let's take a look at the number of unicorn start-ups in the world.</div>	
+</div>
+
+<div class='text'>
+	<h1>How many start-ups are still in the unicorn phase since it first join the club?</h1>
+</div>
+<!-- tableau public -->
+<div class='center_aligner'>
+	<!-- insert tableau public embed link below this line -->
+<div class='tableauPlaceholder' id='viz1683462110460' style='position: relative'><noscript><a href='#'><img alt='Number of Unicorns per Year ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Nu&#47;NumberofUnicornbyYear&#47;NumberofUnicornsperYear&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='NumberofUnicornbyYear&#47;NumberofUnicornsperYear' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Nu&#47;NumberofUnicornbyYear&#47;NumberofUnicornsperYear&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1683462110460');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1024px';vizElement.style.height='795px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1024px';vizElement.style.height='795px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+</div>
+<!-- caption for tableau 1 -->
+	<div class='captiontableau'>According to <a href="https://www.cbinsights.com/research/unicorn-company-slowdown/">CBInsights</a> the number of new unicorns takes a nosedive because of 2021's unicorn stampede, unstable macro conditions, venture market tightens, and exits cool off.</div>	
+</div>
+
+<div class='text'>
+	<h1>What are the unicorns and how much are each of them are valued at?</h1>
+	Hover at each circle to find out their names and valuations.
+</div>
+
+<!-- tableau public -->
+<div class='center_aligner'>
+	<!-- insert tableau public embed link below this line -->
+<div class='tableauPlaceholder' id='viz1683484997791' style='position: relative'><noscript><a href='#'><img alt='Unicorns ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Un&#47;UnicornCompanies_16834843728680&#47;Unicorns&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='UnicornCompanies_16834843728680&#47;Unicorns' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Un&#47;UnicornCompanies_16834843728680&#47;Unicorns&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1683484997791');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1000px';vizElement.style.height='827px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1000px';vizElement.style.height='827px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+</div>
+<!-- caption for tableau 2 -->
+	<div class='captiontableau'>Is there any of the companies that is a surprise to you? For me, there are Cava Group and A24.</div>	
+</div>
+
+<div class='text'>
+	<h1>What are the industry that these unicorns are concentrated on?</h1>
+</div>
+
+<!-- tableau public -->
+<div class='center_aligner'>
+<div class='tableauPlaceholder' id='viz1683484931244' style='position: relative'><noscript><a href='#'><img alt='Industries ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Un&#47;UnicornIndustries_16834849210790&#47;Industries&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='UnicornIndustries_16834849210790&#47;Industries' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Un&#47;UnicornIndustries_16834849210790&#47;Industries&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1683484931244');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1000px';vizElement.style.height='827px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1000px';vizElement.style.height='827px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+</div>
+
+<div class='text'>
+	<h1>How about the locations? Which cities have the most of these mythical start-ups?</h1>
+	You guessed it right! Most of these unicorns are based in San Francisco (Silicon Valley), followed by other cities like Beijing, New York, Shanghai, London and Bengaluru.
+</div>
+<!-- tableau public -->
+<div class='center_aligner'>
+	<!-- insert tableau public embed link below this line -->
+<div class='tableauPlaceholder' id='viz1683462020724' style='position: relative'><noscript><a href='#'><img alt='Cities Map ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ci&#47;CitiesandCountries_16834618695000&#47;CitiesMap&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='CitiesandCountries_16834618695000&#47;CitiesMap' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ci&#47;CitiesandCountries_16834618695000&#47;CitiesMap&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1683462020724');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1024px';vizElement.style.height='795px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1024px';vizElement.style.height='795px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+</div>
+
+<div class='text'>
+	<h1>How investors spot on a start-up that could be potentially be an unicorn?</h1>
+	There are five key questions that venture capitalists ask as they evaluate prospective investments, and these are the 5 Ts:
+</div>
+
+<!-- image 1 -->
+<div class='center_aligner'>
+	<!-- change line 120 if you want to change the size of the image -->
+	<img class='small' src="images/the5ts.png"> 	
+</div>
+
+
+<div class='text'>
+	<h1>Let's shift the focus to the deca- and hectocorns. What are the start-ups, their valuations and the industry they are in?</h1>
+	The concept of unicorns has also expanded beyond just start-ups with $1 billion valuations. In recent years, companies with valuations of $10 billion or more have been referred to as "decacorns," and those with valuations of $100 billion or more have been dubbed "hectocorns." This terms are relatively new and it is a very rare feat for a company to reach this level of valuation, with only a handful of companies currently holding the title of hectocorn.
+</div>
+
+<!-- interactive embed, adjust the width and height as necessary, copy lines 155 to 157 to create a new interactive embed --> 
+<div class='center_aligner'>
+	<iframe src="svg/circlepackingunicorns.html" frameBorder=0 scrolling=no></iframe>
+</div>
+
+<div class='text'>
+	<h1>Who are the investors to the deca- and hectocorns of the world?</h1>
+	Now that we have identified these companies and their industries, the alluvial chart will show us who are the investment groups that funded these companies. The purpose of the chart is to show network of investments groups and their multiple unicorn start-ups. On average, each company has three main investors funding the business.
+</div>
+
+<!-- interactive embed, adjust the width and height as necessary, copy lines 155 to 157 to create a new interactive embed --> 
+<div class='center_aligner'>
+	<iframe src="svg/alluvialunicorns.html" frameBorder=0 scrolling=no></iframe>
+</div>
+<!-- caption for image 2 -->
+<div class='center_aligner'>
+	<div class='caption'>Surprisingly, OpenAI, who has been in everyone's mind for its breakthrough discovery, has only one main investor!</div>	
+</div>
+
+
+<div class='text'>
+	<h1>What typically comes next for the past unicorns? And what are the common exit strategies would these start-ups take?</h1>
+</div>
+
+<!-- image 2 -->
+<div class='center_aligner'>
+	<!-- change line 120 if you want to change the size of the image -->
+	<img class='small' src="images/exitstrategy.png"> 	
+</div>
+
+<div class='text'>
+	<h1>It's important for unicorn startups to have a clear understanding of their options and plan accordingly to maximize their chances of success.</h1>
+</div>
+
+</body>
+<script type="text/javascript">
+
+// instantiate the scrollama
+const scroller = scrollama();
+const scroller2 = scrollama();
+
+scroller
+  .setup({
+    step: ".text",
+    offset: 0.9,
+  })
+  .onStepEnter(response => {
+    // { element, index, direction }
+    el=response.element;
+    el.style.opacity=1;
+    el.style.marginTop='5%';    
+  })
+  .onStepExit(response => {
+    // { element, index, direction }  
+    el=response.element;
+  })
+  ;
+ // setup resize event
+window.addEventListener("resize", scroller.resize);
+
+scroller2
+  .setup({
+    step: ".progressive",
+    offset: 0.6,
+  })
+  .onStepEnter(response => {
+    // { element, index, direction }
+    el=response.element;
+    el.style.opacity=1;
+    if(response.index==0 || 1 || 2){
+    	stick('dynamic_sticky1')
+    	response.direction=='down'
+    	if(response.index==0){
+    		count(1,75,10,'Founders','two or more people','dynamic_sticky1')
+    	} else if (response.index==1){
+    		count(1,5,1,'Top 3 industries','technology, media and telecommunications, and healthcare','dynamic_sticky1')
+    	} else if (response.index==2){
+    		count(0,2.6,.1,'Goldilocks spot','just nice','dynamic_sticky1')
+    	}
+    }
+  })
+  .onStepExit(response => {
+    // { element, index, direction }  
+    el=response.element;
+    console.log(response.index)
+    if(response.index==2){
+    	unstick('dynamic_sticky1')
+    }
+    el.style.opacity=0;
+  })
+  ;
+ // setup resize event
+window.addEventListener("resize", scroller2.resize);
+
+function count(number1, number2, step, title, label, location_id, prefix='+', suffix='%'){
+	target = document.querySelector('#'+location_id)
+	console.log(target)
+	let text=number1;
+
+	setInterval(function(){
+		if(text!=number2){
+			num = text+step
+			if(num % 1 == 0){
+				text = num
+			} else {
+				text = parseFloat(num.toFixed(2))
+			}
+			target.innerHTML="<div class='aligner'><h1>"+title+"</h1><div id='counter'>"+prefix+text+suffix+"</div><h2>"+label+"</h2></div>"
+		}
+	}, 30);
+}
+
+function stick(location_id){
+	target = document.querySelector('#'+location_id)
+	target.style.position="sticky"
+}
+
+function unstick(location_id){
+	target = document.querySelector('#'+location_id)
+	target.style.position="relative"
+}
+
+</script>
+
+</html>
